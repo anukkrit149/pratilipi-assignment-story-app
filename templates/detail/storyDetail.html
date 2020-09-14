@@ -1,0 +1,48 @@
+{% extends 'layout/dashboard.html' %}
+{% block content %}
+
+
+    <div>
+{#        <div class="d-flex justify-content-between">#}
+            <div class="card" >
+                <div class="card-body">
+                    <div class="card-title">
+                        <h2 class="">{{ story.title }}</h2>
+                        <div class="d-flex justify-content-start">
+                            <div class="btn btn-success" style="margin: auto"><i class="fa fa-eye fa-2x"></i> <p id="view">Live Views - {{ views }}</p></div>
+                            <div class="btn btn-info" style="margin: auto"><i class="fa fa-book fa-2x"></i> <p>Total Reads - {{ reads }}</p> </div>
+                        </div>
+                    </div>
+
+{#                    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>#}
+                    <p class="card-text">
+                        <p class="card-body">
+                            {{ story.story }}
+                        </p>
+                    </p>
+                    <a href="{% url 'home' %}" class="btn card-link">Go Back to Dashboard</a>
+
+{#                    <a href="#" class="card-link">Another link</a>#}
+                </div>
+            </div>
+{#        </div>#}
+    </div>
+<script>
+$(document).ready(function () {
+    setTimeout(
+  function()
+  {
+    console.log("Story is ready,Get views now")
+  }, 5000);
+    {#var ctr = 0;#}
+    setInterval(function () {
+        $.get("{{ request.get_full_path }}/{{ user.id }}/api/",function (data,status) {
+            {#console.log(status);#}
+            console.log(data['views']);
+            {#ctr += 1#}
+            document.getElementById("view").innerHTML = "Live Views - "+(data['views']+ctr);
+        })
+    },5000);
+});
+</script>
+{% endblock %}

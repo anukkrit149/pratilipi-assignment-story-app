@@ -1,0 +1,25 @@
+{% extends 'layout/dashboard.html' %}
+{% block content %}
+
+
+    <div>
+        <div class="d-flex justify-content-between">
+            {% for story in stories %}
+                <div class="card" style="width: 24rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ story.title }}</h5>
+{#                    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>#}
+                    <p class="card-text">{{ story.story|slice:":255" }}...........</p>
+                    {% if user.id in story.viewedBy  %}
+                        <a href="story/{{ story.pk }}" class="btn card-link">Read Again</a>
+                    {% else %}
+                        <a href="story/{{ story.pk }}" class="btn card-link">Read Full Story</a>
+                    {% endif %}
+
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
